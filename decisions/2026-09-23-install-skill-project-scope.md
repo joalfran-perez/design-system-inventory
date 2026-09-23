@@ -39,6 +39,29 @@ reinstalar/actualizar; no se edita a mano.
   byte-idénticos en el contenido de este skill (el canónico solo agrega 4 skills REST/token que no se
   usan aquí).
 
+## Extensión (mismo día)
+
+Mismo mecanismo, mismo repo (`southleft/skills-for-figma`), alcance de proyecto — se instalaron además
+las 3 skills hermanas ya referenciadas en `AGENTS.md` invariante 5:
+
+```
+npx skills add southleft/skills-for-figma --skill deep-component-figma analyze-component-set-figma export-tokens-figma -a cursor -y
+```
+
+Resultado: `.agents/skills/deep-component-figma/`, `.agents/skills/analyze-component-set-figma/`,
+`.agents/skills/export-tokens-figma/` — cada una con `SKILL.md` + `scripts/` reales (y
+`export-tokens-figma` además con `references/token-formats.md`). Ninguna requiere `FIGMA_TOKEN` (son
+Plugin-API vía `use_figma`, igual que la primera). `skills-lock.json` actualizado con las 4 entradas.
+
+No se abre una ADR nueva para esto porque es la misma decisión (instalación oficial vía `npx skills`,
+alcance proyecto) aplicada al mismo lote de skills hermanas ya previstas — no un cambio de mecanismo ni
+de fuente.
+
+Complementario a esta extensión: se creó `skills/prompting-figma-skills.md`, documentando cómo Cursor
+invoca realmente estas 4 skills (match automático por `description` o `/skill-name` explícito — **no**
+por el parámetro `skillNames` de `use_figma`, que es solo una anotación de log). Ver ese archivo para
+frases-gatillo verbatim y guía de disambiguación entre las 4.
+
 ## Consecuencias
 
 - **Reabre parcialmente** [`decisions/2026-09-02-community-skill-source.md`](2026-09-02-community-skill-source.md):

@@ -26,7 +26,7 @@ Consumidor típico de la salida: ModUSS (`C:\Users\Genesys\ModUSS`) post-procesa
 2. Errores atómicos: un script fallido no aplica nada — leer error, corregir, reintentar.
 3. **No** `figma.loadAllPagesAsync()` (no existe en este runtime). Páginas: `setCurrentPageAsync`. Restaurar página original al final.
 4. `VERBOSITY` / `INCLUDE` / `COMPONENT_NAME_FILTER` / `PAGE_NAMES` se inlinan **en el call** (script upstream). Default upstream inseguro: `full` + `PAGE_NAMES = []`. No editar el `inventory.js` instalado en `.agents/skills/` (es upstream, se actualiza reinstalando el skill, no a mano).
-5. `visualSpec` = raíz + hijos directos (`childSpecs`). Árbol profundo / CSS SM / export disco → skills hermanos en **southleft**, no aquí.
+5. `visualSpec` = raíz + hijos directos (`childSpecs`). Árbol profundo / CSS SM / export disco → skills hermanos (`deep-component-figma`, `analyze-component-set-figma`, `export-tokens-figma`), instalados en `.agents/skills/` igual que el inventario.
 6. Colores: hex mayúsculas, alpha drop. Aliases: `{path.con.puntos}`, no `VariableID` crudo.
 7. No commitear dumps (`output/`), `logs/`, ni secretos. No commit/push salvo pedido explícito.
 8. Archivos Figma view-only: `use_figma` falla aunque el script solo lea. Fallback MCP remoto — ver `gotchas/read-only-access.md`.
@@ -37,9 +37,9 @@ Consumidor típico de la salida: ModUSS (`C:\Users\Genesys\ModUSS`) post-procesa
 
 | Recurso | Por qué | Cuándo sí |
 |---------|---------|-----------|
-| `inventory.js` instalado (`.agents/skills/design-system-inventory-figma/scripts/`) | Extractor estable de southleft, ya local | Cursor lo carga solo vía `skillNames`; no hace falta Read manual |
-| `visual-spec.md` instalado (misma ruta, `references/`) | Tabla CSS del spec | Al mapear visualSpec → código; contrato local ya está en `context/design.md` |
-| SKILL.md comunitario | Duplica este overlay | Instalado en `.agents/skills/design-system-inventory-figma/`; no leer el archivo completo a mano, Cursor lo resuelve por `skillNames` |
+| Scripts `.js` de las 4 skills instaladas (`.agents/skills/*/scripts/`) | Extractores estables de southleft, ya locales | Cursor los carga solo cuando la skill matchea (mensaje o `/skill-name`); no hace falta Read manual. Ver `skills/prompting-figma-skills.md` |
+| `visual-spec.md` / `token-formats.md` instalados (`.agents/skills/*/references/`) | Tablas de referencia del spec | Al mapear visualSpec/formatos → código; contrato local ya está en `context/design.md` |
+| Los 4 `SKILL.md` comunitarios | Duplican los overlays de `skills/` | Instalados en `.agents/skills/`; no leer el archivo completo a mano, Cursor los resuelve solo (no vía `skillNames`, que es solo un log) |
 | Transcripts / canvas ModUSS | Historial crudo | Nunca. Usar `logs/` y `context/` |
 | Inventarios ModUSS (`tokens/*.json`) | Datos de otro repo | Solo si el usuario pide cruzar extracción ↔ auditoría |
 | `output/` | Dumps grandes | Grep/Read por path; nunca el archivo entero al prompt |
@@ -65,9 +65,10 @@ Según tarea, **uno** de:
 | Trigger | Usar |
 |---------|------|
 | Inventario entero de un archivo Figma | `use_figma` + `skillNames: "design-system-inventory-figma"` (skill instalado en `.agents/skills/`, Cursor lo resuelve solo) + `skills/design-system-inventory-figma.md` |
-| Un componente, árbol ilimitado, reactions | `deep-component-figma` (southleft; no vendor) |
-| Un variant set como state machine CSS | `analyze-component-set-figma` (southleft; no vendor) |
-| Tokens a disco (Tokens Studio / JSON) | `export-tokens-figma` (southleft) o repo `uss-kit-digital` |
+| Un componente, árbol ilimitado, reactions | `deep-component-figma` (instalado en `.agents/skills/`) |
+| Un variant set como state machine CSS | `analyze-component-set-figma` (instalado en `.agents/skills/`) |
+| Tokens a disco (Tokens Studio / JSON) | `export-tokens-figma` (instalado en `.agents/skills/`) o repo `uss-kit-digital` |
+| Cómo promptear cualquiera de las 4 skills instaladas | `skills/prompting-figma-skills.md` — frases-gatillo, `/skill-name` vs match automático, disambiguación |
 | Write Figma / variables / librería | skills Figma (`figma-use`, `figma-generate-library`, …) **después** de cargar el skill Figma |
 | Auditoría USS ya extraída / diffs entre sistemas | Repo ModUSS + su `AGENTS.md`. No re-extraer desde aquí |
 | Crear/editar skills Cursor | skill `create-skill` |
@@ -83,8 +84,8 @@ Si un procedimiento se usa ≥2 veces → archivo en `skills/` y puntero aquí.
 | `context/decisiones.md` | Índice de ADRs |
 | `decisions/` | ADRs fechados (qué / por qué / status) |
 | `state/current.md` | Hecho / pendiente / blockers |
-| `skills/` | Overlay USS (`design-system-inventory-figma.md`). Skill canónico = GitHub southleft |
-| `.agents/skills/design-system-inventory-figma/` | Skill comunitario instalado (Cursor CLI, alcance proyecto). `SKILL.md` + `scripts/inventory.js` + `references/visual-spec.md` reales, versionados |
+| `skills/` | Overlays USS: `design-system-inventory-figma.md` (procedimiento), `prompting-figma-skills.md` (cómo invocar). Skills canónicas = GitHub southleft |
+| `.agents/skills/` | 4 skills comunitarias instaladas (Cursor CLI, alcance proyecto): `design-system-inventory-figma`, `deep-component-figma`, `analyze-component-set-figma`, `export-tokens-figma`. Cada una con `SKILL.md` + `scripts/` reales, versionados |
 | `skills-lock.json` | Lockfile del CLI `npx skills` (fuente + hash del skill instalado). Reinstalar con el mismo comando actualiza hash; no editar a mano |
 | `gotchas/` | Fallos conocidos + fix |
 | `logs/` | Resúmenes de sesión **locales** (gitignored) |

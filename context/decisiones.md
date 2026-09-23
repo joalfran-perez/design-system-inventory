@@ -9,7 +9,7 @@ ADRs en `decisions/`. Este archivo es el índice; no duplicar el razonamiento.
 | 2026-08-31 | [visualspec-shallow](../decisions/2026-08-31-visualspec-shallow.md) | aceptada | visualSpec = raíz + L1; hex CSS; no recursor |
 | 2026-09-02 | [persistent-memory](../decisions/2026-09-02-persistent-memory.md) | aceptada | Memoria en repo; `logs/` y `output/` locales |
 | 2026-09-02 | [community-skill-source](../decisions/2026-09-02-community-skill-source.md) | aceptada | Sin fork: southleft es canónico; overlay en `skills/` |
-| 2026-09-23 | [install-skill-project-scope](../decisions/2026-09-23-install-skill-project-scope.md) | aceptada | Skill instalado vía `npx skills` en `.agents/skills/`, alcance proyecto, versionado |
+| 2026-09-23 | [install-skill-project-scope](../decisions/2026-09-23-install-skill-project-scope.md) | aceptada | 4 skills instaladas vía `npx skills` en `.agents/skills/`, alcance proyecto, versionado |
 
 ## Criterios (no reabrir sin ADR)
 

@@ -40,7 +40,7 @@ Válvulas: `INCLUDE` (`tokens`\|`components`\|`styles`), `COMPONENT_NAME_FILTER`
 
 ## Profundidad visual
 
-Raíz + hijos directos. No reactions, no instancias anidadas, no árbol ilimitado → `deep-component-figma`. Variant set → CSS SM: `analyze-component-set-figma`. Tokens a disco: `export-tokens-figma`. Los tres son skills hermanos **en el mismo repo comunitario**, no aquí.
+Raíz + hijos directos. No reactions, no instancias anidadas, no árbol ilimitado → `deep-component-figma`. Variant set → CSS SM: `analyze-component-set-figma`. Tokens a disco: `export-tokens-figma`. Los tres son skills hermanos del mismo repo comunitario (`southleft/skills-for-figma`), instalados localmente en `.agents/skills/` igual que este. Cómo promptear cada una: `skills/prompting-figma-skills.md`.
 
 Tabla campo→CSS: [references/visual-spec.md](https://github.com/southleft/skills-for-figma/blob/main/skills/design-system-inventory-figma/references/visual-spec.md) upstream. No duplicar.
 

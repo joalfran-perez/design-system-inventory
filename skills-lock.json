@@ -1,11 +1,29 @@
 {
   "version": 1,
   "skills": {
+    "analyze-component-set-figma": {
+      "source": "southleft/skills-for-figma",
+      "sourceType": "github",
+      "skillPath": "skills/analyze-component-set-figma/SKILL.md",
+      "computedHash": "a24975e20f95b54a68a28964a1778d387e2d21521732ab32d5d9ef67f7dfbb89"
+    },
+    "deep-component-figma": {
+      "source": "southleft/skills-for-figma",
+      "sourceType": "github",
+      "skillPath": "skills/deep-component-figma/SKILL.md",
+      "computedHash": "b4ecee61d401f09ce53db00ac7293436bf642f3b3f4874bfc56f377cc64d7441"
+    },
     "design-system-inventory-figma": {
       "source": "southleft/skills-for-figma",
       "sourceType": "github",
       "skillPath": "skills/design-system-inventory-figma/SKILL.md",
       "computedHash": "b5045420cf1e6dbb6de78823c7c0d211d899b1690eafc2c676dc0eeecade7647"
+    },
+    "export-tokens-figma": {
+      "source": "southleft/skills-for-figma",
+      "sourceType": "github",
+      "skillPath": "skills/export-tokens-figma/SKILL.md",
+      "computedHash": "bc8aa2eed5f95ed19433b7066c639cf1c7ea7de026aaa242cae4d074ec1d964a"
     }
   }
 }

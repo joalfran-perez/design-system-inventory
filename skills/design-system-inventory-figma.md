@@ -10,7 +10,7 @@ actualiza reinstalando el skill (mismo comando), no parcheando el archivo.
 
 Usar para extraer tokens/components/styles de **un** archivo Figma. Runtime: `figma-use` **primero**.
 
-No usar para árbol profundo (`deep-component-figma`), CSS SM (`analyze-component-set-figma`), ni tokens a disco (`export-tokens-figma`) — mismos nombres en el repo comunitario.
+No usar para árbol profundo (`deep-component-figma`), CSS SM (`analyze-component-set-figma`), ni tokens a disco (`export-tokens-figma`) — mismos nombres en el repo comunitario, también instaladas en `.agents/skills/`. Cómo promptear cada una: `skills/prompting-figma-skills.md`.
 
 ## Cargar
 
