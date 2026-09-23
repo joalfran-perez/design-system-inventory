@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "design-system-inventory-figma": {
+      "source": "southleft/skills-for-figma",
+      "sourceType": "github",
+      "skillPath": "skills/design-system-inventory-figma/SKILL.md",
+      "computedHash": "b5045420cf1e6dbb6de78823c7c0d211d899b1690eafc2c676dc0eeecade7647"
+    }
+  }
+}

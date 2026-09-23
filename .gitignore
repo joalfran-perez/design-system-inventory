@@ -1,0 +1,11 @@
+# Resúmenes de sesión (locales; lo durable va a decisions/ o state/)
+logs/
+
+# Dumps de inventario (nunca al chat ni a git)
+output/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.local.md
+.cursor/settings.json
