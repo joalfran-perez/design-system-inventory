@@ -24,6 +24,24 @@
       "sourceType": "github",
       "skillPath": "skills/export-tokens-figma/SKILL.md",
       "computedHash": "bc8aa2eed5f95ed19433b7066c639cf1c7ea7de026aaa242cae4d074ec1d964a"
+    },
+    "import-tokens-figma": {
+      "source": "southleft/skills-for-figma",
+      "sourceType": "github",
+      "skillPath": "skills/import-tokens-figma/SKILL.md",
+      "computedHash": "d9e4b5e90cb1feb8d65069bdcb6cfc9ab439ed555bc1bfcb313721e38fb743af"
+    },
+    "manage-variables-figma": {
+      "source": "southleft/skills-for-figma",
+      "sourceType": "github",
+      "skillPath": "skills/manage-variables-figma/SKILL.md",
+      "computedHash": "93852842d3c1cfb25f152a34f3a46270a0185eafb0a9cc1936f2be725351c666"
+    },
+    "setup-design-tokens-figma": {
+      "source": "southleft/skills-for-figma",
+      "sourceType": "github",
+      "skillPath": "skills/setup-design-tokens-figma/SKILL.md",
+      "computedHash": "d2b8bbec1ba804773a53e6620b8f6a22d03e3e49eaf190d151f96d535a284ab0"
     }
   }
 }

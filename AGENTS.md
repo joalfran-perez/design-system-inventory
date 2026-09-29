@@ -37,9 +37,9 @@ Consumidor típico de la salida: ModUSS (`C:\Users\Genesys\ModUSS`) post-procesa
 
 | Recurso | Por qué | Cuándo sí |
 |---------|---------|-----------|
-| Scripts `.js` de las 4 skills instaladas (`.agents/skills/*/scripts/`) | Extractores estables de southleft, ya locales | Cursor los carga solo cuando la skill matchea (mensaje o `/skill-name`); no hace falta Read manual. Ver `skills/prompting-figma-skills.md` |
+| Scripts `.js` de las 7 skills instaladas (`.agents/skills/*/scripts/`) | Extractores/writers southleft, ya locales | Cursor los carga cuando la skill matchea (mensaje o `/skill-name`). Ver `skills/prompting-figma-skills.md` |
 | `visual-spec.md` / `token-formats.md` instalados (`.agents/skills/*/references/`) | Tablas de referencia del spec | Al mapear visualSpec/formatos → código; contrato local ya está en `context/design.md` |
-| Los 4 `SKILL.md` comunitarios | Duplican los overlays de `skills/` | Instalados en `.agents/skills/`; no leer el archivo completo a mano, Cursor los resuelve solo (no vía `skillNames`, que es solo un log) |
+| Los 7 `SKILL.md` comunitarios | Duplican overlays de `skills/` | Instalados en `.agents/skills/`; Cursor los resuelve solo (`skillNames` es solo log) |
 | Transcripts / canvas ModUSS | Historial crudo | Nunca. Usar `logs/` y `context/` |
 | Inventarios ModUSS (`tokens/*.json`) | Datos de otro repo | Solo si el usuario pide cruzar extracción ↔ auditoría |
 | `output/` | Dumps grandes | Grep/Read por path; nunca el archivo entero al prompt |
@@ -67,9 +67,13 @@ Según tarea, **uno** de:
 | Inventario entero de un archivo Figma | `use_figma` + `skillNames: "design-system-inventory-figma"` (skill instalado en `.agents/skills/`, Cursor lo resuelve solo) + `skills/design-system-inventory-figma.md` |
 | Un componente, árbol ilimitado, reactions | `deep-component-figma` (instalado en `.agents/skills/`) |
 | Un variant set como state machine CSS | `analyze-component-set-figma` (instalado en `.agents/skills/`) |
-| Tokens a disco (Tokens Studio / JSON) | `export-tokens-figma` (instalado en `.agents/skills/`) o repo `uss-kit-digital` |
-| Cómo promptear cualquiera de las 4 skills instaladas | `skills/prompting-figma-skills.md` — frases-gatillo, `/skill-name` vs match automático, disambiguación |
-| Write Figma / variables / librería | skills Figma (`figma-use`, `figma-generate-library`, …) **después** de cargar el skill Figma |
+| Tokens Figma → disco (DTCG/CSS/…) | `export-tokens-figma` (instalado) o repo `uss-kit-digital` |
+| Disco/DTCG → variables Figma (copia 1:1) | `import-tokens-figma` — `apply-tokens.js` dos pases (literales, luego aliases). Destino: sandbox o One/Ext **tras GATE**. Tras import: borrar extras **por ID**; nunca `find(name)` + `remove()`. ADR `2026-09-28` |
+| Bootstrap colección vacía | `setup-design-tokens-figma` (fallback; import ya crea la colección) |
+| Scopes FONT/TEXT/FILL post-create; borrar colección leftover | `manage-variables-figma` — `collection.remove()` con ID inlined |
+| Bind PAINT/TEXT estilo↔variable | `figma-use`. PAINT: Light/Dark → Color Tokens; `_Base/` y `{Palette}/{step}` (Exito→Success, Alerta→Warning, Neutral 10→blanco) → `_Base palettes`. TEXT style type: `setBoundVariable`. Nodos stale-mismo-nombre: rebind por `variable.name`. Fill canvas TEXT: Strong; `Contenido/a` → `Text interactive/Default`. ADR `2026-09-29-paint-style-bind-like-type` + `2026-09-29-canvas-text-fill-strong-interactive` |
+| Write Figma / librería de componentes | `figma-use` + `figma-generate-library` (oficial MCP) |
+| Cómo promptear las skills instaladas | `skills/prompting-figma-skills.md` — frases-gatillo, `/skill-name` vs match automático, disambiguación export vs import |
 | Auditoría USS ya extraída / diffs entre sistemas | Repo ModUSS + su `AGENTS.md`. No re-extraer desde aquí |
 | Crear/editar skills Cursor | skill `create-skill` |
 | Git commit / PR | reglas de usuario |
@@ -85,7 +89,7 @@ Si un procedimiento se usa ≥2 veces → archivo en `skills/` y puntero aquí.
 | `decisions/` | ADRs fechados (qué / por qué / status) |
 | `state/current.md` | Hecho / pendiente / blockers |
 | `skills/` | Overlays USS: `design-system-inventory-figma.md` (procedimiento), `prompting-figma-skills.md` (cómo invocar). Skills canónicas = GitHub southleft |
-| `.agents/skills/` | 4 skills comunitarias instaladas (Cursor CLI, alcance proyecto): `design-system-inventory-figma`, `deep-component-figma`, `analyze-component-set-figma`, `export-tokens-figma`. Cada una con `SKILL.md` + `scripts/` reales, versionados |
+| `.agents/skills/` | 7 skills southleft (proyecto): inventario, deep, analyze-set, export, import, manage-variables, setup-design-tokens. `SKILL.md` + `scripts/` versionados |
 | `skills-lock.json` | Lockfile del CLI `npx skills` (fuente + hash del skill instalado). Reinstalar con el mismo comando actualiza hash; no editar a mano |
 | `gotchas/` | Fallos conocidos + fix |
 | `logs/` | Resúmenes de sesión **locales** (gitignored) |

@@ -1,8 +1,7 @@
 # Guía de prompting — skills de Figma instaladas
 
-Cómo activar de forma confiable las 4 skills comunitarias instaladas en `.agents/skills/`
-(`design-system-inventory-figma`, `deep-component-figma`, `analyze-component-set-figma`,
-`export-tokens-figma`). No es un tutorial de Figma; es la mecánica de invocación de Cursor.
+Cómo activar las skills comunitarias en `.agents/skills/` (inventario, deep, analyze-set, export,
+import, manage-variables, setup-design-tokens). No es un tutorial de Figma; es la mecánica de invocación.
 
 ## Cómo Cursor realmente las invoca (2 mecanismos, no 1)
 
@@ -11,7 +10,7 @@ Confirmado en [cursor.com/docs/context/skills](https://cursor.com/docs/context/s
 1. **Automático (por defecto)** — al iniciar, Cursor expone todas las skills instaladas junto con su
    `description` al agente. El agente decide **semánticamente** si el mensaje del usuario coincide con
    el propósito de alguna — no es un match de substring literal, es juicio del modelo leyendo la
-   descripción completa. Las 4 skills tienen `disable-model-invocation: false` → esta vía está activa.
+   descripción completa. Las skills southleft tienen `disable-model-invocation: false` → esta vía está activa.
 2. **Manual** — el usuario escribe `/nombre-skill` en el chat (p. ej. `/deep-component-figma`). Se
    adjunta solo a ese mensaje. Usar cuando el pedido es ambiguo entre 2+ skills (ver tabla de
    disambiguación) o cuando el match automático no ocurrió.
@@ -34,6 +33,9 @@ la probabilidad de match automático.
 | `deep-component-figma` | Un componente/nodo, árbol recursivo sin límite, tokens resueltos, reactions, instancias anidadas | "get the full component tree", "deep extract this component", "give me everything about this node for code gen", "resolve all the tokens in this component", "what instances does this component nest", "extract reactions/prototype links", "high-fidelity component spec" |
 | `analyze-component-set-figma` | Un `COMPONENT_SET` → máquina de estados CSS (variant axes → pseudo-clases + diffs por variante) | "analyze this component set", "turn these variants into CSS states", "generate a button/input/checkbox from Figma variants", "what changes between the hover and default state", "map Figma variants to component props", "extract the state machine for this component" |
 | `export-tokens-figma` | Variables de Figma → archivos de tokens en disco (DTCG, CSS, Tailwind, SCSS, TS, JSON, Style Dictionary, Tokens Studio) | "export tokens", "export Figma variables", "generate CSS variables from Figma", "turn my Figma variables into a tokens.json / Tailwind config / SCSS", "sync design tokens to code" |
+| `import-tokens-figma` | Tokens en código → variables Figma (crea/actualiza por nombre, aliases en 2 pases) | "import tokens into Figma", "create Figma variables from my tokens.json / DTCG / Tailwind config", "sync design tokens to Figma", "push tokens to Figma" |
+| `setup-design-tokens-figma` | Bootstrap de colección vacía (fallback; import ya crea si no existe) | "set up design tokens", "create a variable collection from scratch" |
+| `manage-variables-figma` | Scopes / modos / rename post-create | "set variable scopes", "FONT_FAMILY FONT_SIZE LINE_HEIGHT" |
 
 Parafrasear en español funciona porque el match es semántico, no textual — pero conviene incluir el
 sustantivo técnico ancla: "árbol"/"tree" → `deep-component-figma`; "variant"/"estado"/"CSS" →
@@ -49,6 +51,7 @@ equivocada si el pedido es vago:
 |----------------|-----------------|--------------------|
 | "extract this component" | `deep-component-figma` **o** `design-system-inventory-figma` | Si es **un** nodo con árbol/tokens/reactions → `deep-component-figma`. Si es **todo el archivo** → `design-system-inventory-figma`. Si sigue ambiguo, usar `/deep-component-figma` explícito. |
 | "give me the tokens" | `export-tokens-figma` **o** `design-system-inventory-figma` (su bloque `tokens`) | Si el destino es **un archivo en disco** (CSS/Tailwind/DTCG) → `export-tokens-figma`. Si es solo **inspeccionar** valores dentro de un kit más amplio → `design-system-inventory-figma`. |
+| "sync design tokens" / "push tokens" | `export-tokens-figma` **o** `import-tokens-figma` | Figma **→ disco** = export. Disco/DTCG **→ Figma** = import. Nunca `library-variables-figma` para el kit externo. |
 | "analyze this component" (sin aclarar si es un set o una instancia) | `analyze-component-set-figma` **o** `deep-component-figma` | Si el nodo es un `COMPONENT_SET` con variantes de estado → `analyze-component-set-figma`. Si es un nodo único que quieres aplanar a código → `deep-component-figma`. |
 
 Regla general: si el pedido nombra explícitamente "component set" / "variantes" / "estados CSS" → casi
@@ -56,7 +59,7 @@ siempre `analyze-component-set-figma`. Si nombra "todo el sistema" / "inventario
 `design-system-inventory-figma`. Ante duda real, preferir `/skill-name` explícito sobre confiar en el
 match automático.
 
-## Runtime común a las 4
+## Runtime común a las skills southleft
 
 Todas requieren cargar primero el skill oficial **`figma-use`** (Plugin API: plain JS, top-level
 `await` + `return`, sin IIFE, sin `figma.closePlugin()`, errores atómicos). Ver `AGENTS.md` invariante 1.

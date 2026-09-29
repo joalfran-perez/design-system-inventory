@@ -58,13 +58,16 @@ Al extraer para ModUSS: este skill puede alimentar, pero ModUSS exige JSON resue
 
 Keys Figma USS (copiar; no re-parsear URLs): ver tabla abajo. Access = última nota 2026-08; revalidar si `use_figma` falla.
 
-## Archivos Figma USS (9)
+## Archivos Figma USS (9 + sandbox piloto)
 
-Main = view-only en Desktop/Mobile. No proponer edits al core. Additions → USS One / Extension Library (regla ModUSS `decisions/012`).
+Core Fundamentos = **kit UI externo** (snapshot de convenciones, MCP read-only). No editar ni publicar esa librería. Copias internas 1:1 (tras GATE del piloto) → USS One / Ext. Library Fundamentos. Additions de marca ahí, no en el kit. Desktop/Mobile (archivos) fuera de esta migración. ADR: `decisions/2026-09-28-core-kit-snapshot-internal-copies.md`.
+
+Colecciones destino = snapshot: `Space`, `Radius`, `Color` (kit) + `Typography` (conversión). Tras import, borrar extras **por ID** (homónimas, `*-Copy-Originated`). Nunca `find(name)` + `remove()`. Color: `_Base palettes` + `Branding` = hex; `Color Tokens` = aliases (salvo Background 3/4, ghost `#FFFFFF00`, Elevation Light `#FFFFFF00`). Bind PAINT estilos: ADR `2026-09-29-paint-style-bind-like-type`. Fill de **nodos** TEXT (canvas): Strong + `Text interactive/Default` en links — ADR `2026-09-29-canvas-text-fill-strong-interactive`. Estilos TEXT no tienen fill (`gotchas/text-style-no-fill.md`). One Space local `10488:1798` (keys nuevas; no kit publicado). `output/three-libs-post-manual.json` obsoleto.
 
 | Sistema | Archivo | fileKey | Access (ago 2026) |
 |---------|---------|---------|-------------------|
-| USS (core) | Fundamentos | `16PDlIOKg8kb176dMz0Ckg` | MCP read-only (2026-09-02; estilos locales) |
+| USS (core) | Fundamentos | `16PDlIOKg8kb176dMz0Ckg` | MCP read-only (kit externo; snapshot 2026-09-02/28) |
+| USS (piloto) | (Sandbox) Fundamentos Copy | `lBG9RxtvvaBiSfx78Sd472` | edit — único write hasta GATE |
 | USS (core) | Desktop | `nCGtIjrJLW6v4ZMvzTsOAd` | view |
 | USS (core) | Mobile | `uH4MBdFSPYvfxwXcrdFic9` | view (solo Comenzar) |
 | USS One | Fundamentos | `w2FNtlyzRgJtrzkw7ywZHj` | edit |

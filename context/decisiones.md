@@ -9,7 +9,10 @@ ADRs en `decisions/`. Este archivo es el índice; no duplicar el razonamiento.
 | 2026-08-31 | [visualspec-shallow](../decisions/2026-08-31-visualspec-shallow.md) | aceptada | visualSpec = raíz + L1; hex CSS; no recursor |
 | 2026-09-02 | [persistent-memory](../decisions/2026-09-02-persistent-memory.md) | aceptada | Memoria en repo; `logs/` y `output/` locales |
 | 2026-09-02 | [community-skill-source](../decisions/2026-09-02-community-skill-source.md) | aceptada | Sin fork: southleft es canónico; overlay en `skills/` |
-| 2026-09-23 | [install-skill-project-scope](../decisions/2026-09-23-install-skill-project-scope.md) | aceptada | 4 skills instaladas vía `npx skills` en `.agents/skills/`, alcance proyecto, versionado |
+| 2026-09-23 | [install-skill-project-scope](../decisions/2026-09-23-install-skill-project-scope.md) | aceptada | Skills southleft vía `npx skills` en `.agents/skills/`, alcance proyecto, versionado |
+| 2026-09-28 | [core-kit-snapshot-internal-copies](../decisions/2026-09-28-core-kit-snapshot-internal-copies.md) | aceptada | Kit externo = snapshot; extras se borran por ID tras import; piloto sandbox → One + Ext |
+| 2026-09-29 | [paint-style-bind-like-type](../decisions/2026-09-29-paint-style-bind-like-type.md) | aceptada | PAINT bind por nombre (planas `{Palette}/{step}` + semánticos); igual rigor que TEXT |
+| 2026-09-29 | [canvas-text-fill-strong-interactive](../decisions/2026-09-29-canvas-text-fill-strong-interactive.md) | aceptada | Fill de nodo TEXT: Strong; links `Contenido/a` → Text interactive/Default; estilos TEXT no cargan color |
 
 ## Criterios (no reabrir sin ADR)
 
